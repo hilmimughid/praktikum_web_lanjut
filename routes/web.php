@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ContactUsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    echo "Halaman Home";
 });
+
+Route::prefix('product')->group(function () {
+    Route::get('/', [ProductController::class, 'kategori'])->name('product');
+    Route::get('/makanan', [ProductController::class,'makanan']);
+    Route::get('/minuman', [ProductController::class,'minuman']);
+});
+
+Route::prefix('news')->group(function () {
+    Route::get('/', [NewsController::class, 'berita'])->name('news');
+    Route::get('/{judul}', [NewsController::class,'detail']);
+});
+
+Route::prefix('program')->group(function () {
+    Route::get('/', [ProgramController::class, 'program'])->name('program');
+    Route::get('/karir', [ProgramController::class,'karir']);
+    Route::get('/magang', [ProgramController::class,'magang']);
+});
+
+Route::get('/about-us', function () {
+    echo "Nama: Hilmi Mughid <br>";
+    echo "NIM: 2141720081";
+});
+
+Route::resource('contact-us', ContactUsController::class)->names(['index' => 'contact-us'
+]);
