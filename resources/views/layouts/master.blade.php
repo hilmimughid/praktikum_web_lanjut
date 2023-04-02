@@ -34,7 +34,7 @@ http://www.templatemo.com/tm-466-cafe-house
     </div>
     <!-- End Preloader -->
     <div class="tm-top-header">
-        @include('layouts.header')
+        @include('partials.header')
         @yield('header-content')
     </div>
 
@@ -44,7 +44,7 @@ http://www.templatemo.com/tm-466-cafe-house
     </section>
 
     <footer>
-        @include('layouts.footer')
+        @include('partials.footer')
     </footer> <!-- Footer content-->
     <!-- JS -->
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> <!-- jQuery -->
