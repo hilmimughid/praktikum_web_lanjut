@@ -53,45 +53,20 @@
                 </div>
             </div>
             <div class="col-lg-12 tm-popular-items-container">
+                @foreach ($coffees as $coffee)
                 <div class="tm-popular-item">
-                    <img src="img/popular-1.jpg" alt="Popular" class="tm-popular-item-img">
+                    <img src="img/coffee.png" alt="Popular" class="tm-popular-item-img">
                     <div class="tm-popular-item-description">
                         <h3 class="tm-handwriting-font tm-popular-item-title"><span
-                                class="tm-handwriting-font bigger-first-letter">a</span>mericano</h3>
+                                class="tm-handwriting-font bigger-first-letter"></span>{{$coffee->name}}</h3>
                         <hr class="tm-popular-item-hr">
-                        <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet
-                            adipiscing sem neque. sed ipsum.</p>
+                        <p>{{$coffee->excerpt}}</p>
                         <div class="order-now-container">
                             <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
                         </div>
                     </div>
                 </div>
-                <div class="tm-popular-item">
-                    <img src="img/popular-2.jpg" alt="Popular" class="tm-popular-item-img">
-                    <div class="tm-popular-item-description">
-                        <h3 class="tm-handwriting-font tm-popular-item-title"><span
-                                class="tm-handwriting-font bigger-first-letter">c</span>appuccino</h3>
-                        <hr class="tm-popular-item-hr">
-                        <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet
-                            adipiscing sem neque. sed ipsum.</p>
-                        <div class="order-now-container">
-                            <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="tm-popular-item">
-                    <img src="img/popular-3.jpg" alt="Popular" class="tm-popular-item-img">
-                    <div class="tm-popular-item-description">
-                        <h3 class="tm-handwriting-font tm-popular-item-title"><span
-                                class="tm-handwriting-font bigger-first-letter">m</span>ocha</h3>
-                        <hr class="tm-popular-item-hr">
-                        <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet
-                            adipiscing sem neque. sed ipsum.</p>
-                        <div class="order-now-container">
-                            <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </section>
         <section class="tm-section row">
@@ -110,8 +85,8 @@
                             <img src="img/special-1.jpg" alt="Special" class="tm-special-img img-responsive">
                             <a href="#">
                                 <div class="tm-special-description">
-                                    <h3 class="tm-special-title">Donec pede justo</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                                    <h3 class="tm-special-title">{{$americano->name}}</h3>
+                                    <p>{{$americano->excerpt}}</p>
                                 </div>
                             </a>
                         </div>
@@ -122,11 +97,11 @@
                     <div>
                         <div class="tm-special-item">
                             <div class="tm-special-img-container">
-                                <img src="img/special-2.jpg" alt="Special" class="img-responsive">
+                                <img src="img/special-1.jpg" alt="Special" class="img-responsive" style="width: 360px; height: 207px">
                                 <a href="#">
                                     <div class="tm-special-description">
-                                        <h3 class="tm-special-title">Etiam sit amet</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                                        <h3 class="tm-special-title">{{$cappuccino->name}}</h3>
+                                        <p>{{$cappuccino->excerpt}}</p>
                                     </div>
                                 </a>
                             </div>
@@ -135,20 +110,20 @@
                     <div class="tm-special-container-lower">
                         <div class="tm-special-item">
                             <div class="tm-special-img-container">
-                                <img src="img/special-3.jpg" alt="Special" class="img-responsive">
+                                <img src="img/coffee.png" alt="Special" class="img-responsive" style="width: 155px">
                                 <a href="#">
                                     <div class="tm-special-description">
-                                        <p>Vivamus elementum</p>
+                                        <p>{{$esspresso->name}}</p>
                                     </div>
                                 </a>
                             </div>
                         </div>
                         <div class="tm-special-item">
                             <div class="tm-special-img-container">
-                                <img src="img/special-4.jpg" alt="Special" class="img-responsive">
+                                <img src="img/coffee.png" alt="Special" class="img-responsive" style="width: 155px">
                                 <a href="#">
                                     <div class="tm-special-description">
-                                        <p>Quisque rutrum.</p>
+                                        <p>{{$latte->name}}</p>
                                     </div>
                                 </a>
                             </div>
@@ -177,12 +152,9 @@
                             ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam
                             rhoncus.</p>
                         <ol class="margin-top-30">
-                            <li>Tellus eget condimentum rhoncus.</li>
-                            <li>Sem quam semper libero.</li>
-                            <li>Sit amet adipiscing sem neque sed ipsum.</li>
-                            <li>Nam quam nunc, blandit vel, luctus pulvinar.</li>
-                            <li>Maecenas nec odio et ante tincidunt tempus.</li>
-                            <li>Donec vitae sapien ut libero ventenatis faucibus.</li>
+                            @foreach ($coffees as $coffee)
+                            <li>{{$coffee->name}}</li>
+                            @endforeach
                         </ol>
                         <a href="#" class="tm-more-button margin-top-30">Read More</a>
                     </div>

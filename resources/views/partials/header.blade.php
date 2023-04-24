@@ -10,7 +10,7 @@
             </div>
             <nav class="tm-nav">
                 <ul>
-                    <li><a href="/home">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/today-special">Today Special</a></li>
                     <li><a href="/menu">Menu</a></li>
                     <li><a href="/contact">Contact</a></li>
