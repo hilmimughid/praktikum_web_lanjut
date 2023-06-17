@@ -9,19 +9,23 @@ class Mahasiswa extends Model
 {
     use HasFactory;
 
-    protected $table = 'mahasiswas';
+    protected $table="mahasiswas";
 
-    public $timestamps = false;
-
-    protected $primaryKey = 'nim';
+    public $timestamps= false;
 
     protected $fillable = [
         'nim',
         'nama',
         'kelas',
         'jurusan',
-        'no_handphone',
-        'email',
-        'tanggal_lahir'
     ];
+
+    public function kelas(){
+        return $this->belongsTo(Kelas::class);
+    }
+
+    public function matakuliah()
+    {
+        return $this->belongsToMany(MataKuliah::class,'mahasiswa_matakuliah','mahasiswa_id','mata_kuliah_id')->withPivot('nilai');
+    }
 }

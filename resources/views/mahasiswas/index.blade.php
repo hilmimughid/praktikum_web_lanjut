@@ -1,5 +1,4 @@
 @extends('mahasiswas.layout')
-
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -7,12 +6,11 @@
                 <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
             </div>
             <form action="{{ route('mahasiswas.index') }}" method="GET">
-                <div class="float-left my-2 input-group w-50" style="width:300px">
+                <div class="float-left my-2 input-group" style="width:300px">
                     @csrf
-                    <input type="search" class="form-control mr-sm-2" name="src" value="{{ request('src') }}"
-                        placeholder="Pencarian Berdasarkan Nama" aria-label="Example text with button addon"
-                        aria-describedby="button-addon1">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Cari</button>
+                    <input type="search" class="form-control mr-sm-2" name="search" value="{{ request('search') }}"
+                        placeholder="Nama" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Search</button>
                 </div>
             </form>
             <div class="float-right my-2">
@@ -27,37 +25,31 @@
         </div>
     @endif
 
-        <table class="table table-bordered">
+    <table class="table table-bordered">
+        <tr>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Kelas</th>
+            <th>Jurusan</th>
+            <th width="280px">Action</th>
+        </tr>
+        @foreach ($mahasiswa as $Mahasiswa)
             <tr>
-                <th>Nim</th>
-                <th>Nama</th>
-                <th>Kelas</th>
-                <th>Jurusan</th>
-                <th>No. Handphone</th>
-                <th>E-mail</th>
-                <th>Tanggal Lahir</th>
-                <th width="280px">Action</th>
+                <td>{{ $Mahasiswa->nim }}</td>
+                <td>{{ $Mahasiswa->nama }}</td>
+                <td>{{ $Mahasiswa->kelas->nama_kelas }}</td>
+                <td>{{ $Mahasiswa->jurusan }}</td>
+                <td>
+                    <form action="{{ route('mahasiswas.destroy', $Mahasiswa->nim) }}" method="POST" style="width: 300px">
+                        <a class="btn btn-info" href="{{ route('mahasiswas.show', $Mahasiswa->nim) }}">Show</a>
+                        <a class="btn btn-primary" href="{{ route('mahasiswas.edit', $Mahasiswa->nim) }}">Edit</a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a class="btn btn-warning" href="{{ route('mahasiswas.nilai', $Mahasiswa->nim) }}">Nilai</a>
+                    </form>
+                </td>
             </tr>
-            @foreach ($mahasiswas as $Mahasiswa)
-                <tr>
-                    <td>{{ $Mahasiswa->nim }}</td>
-                    <td>{{ $Mahasiswa->nama }}</td>
-                    <td>{{ $Mahasiswa->kelas }}</td>
-                    <td>{{ $Mahasiswa->jurusan }}</td>
-                    <td>{{ $Mahasiswa->no_handphone }}</td>
-                    <td>{{ $Mahasiswa->email }}</td>
-                    <td>{{ $Mahasiswa->tanggal_lahir }}</td>
-                    <td>
-                        <form action="{{ route('mahasiswas.destroy', $Mahasiswa->nim) }}" method="POST">
-                            <a class="btn btn-info" href="{{ route('mahasiswas.show', $Mahasiswa->nim) }}">Show</a>
-                            <a class="btn btn-primary" href="{{ route('mahasiswas.edit', $Mahasiswa->nim) }}">Edit</a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-        {{ $mahasiswas->links() }}
+        @endforeach
+    </table>
 @endsection
