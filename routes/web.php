@@ -19,3 +19,5 @@ Route::get('/', [MahasiswaController::class, 'index']);
 Route::resource('mahasiswas', MahasiswaController::class);
 
 Route::get('mahasiswas/{nim}/khs',[MahasiswaController::class,'showKhs'])->name('mahasiswas.nilai');
+
+Route::get('/mahasiswas/{nim}/print_pdf',[MahasiswaController::class,'print_pdf'])->name('mahasiswas.print_pdf');

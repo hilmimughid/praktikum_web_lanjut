@@ -6,6 +6,7 @@ use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class MahasiswaController extends Controller
 {
@@ -34,6 +35,14 @@ class MahasiswaController extends Controller
         return view('mahasiswas.create', ['kelas' => $kelas]);
     }
 
+    public function print_pdf($nim)
+    {
+        $mahasiswa = Mahasiswa::with('matakuliah')->where('nim', $nim)->first();
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('mahasiswas.print_pdf', ['mahasiswa' => $mahasiswa]);
+        return $pdf->stream();
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -42,6 +51,7 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required',
             'nama' => 'required',
+            'image' => 'required',
             'kelas' => 'required',
             'jurusan' => 'required',
         ]);
@@ -49,12 +59,19 @@ class MahasiswaController extends Controller
         $mahasiswa = new Mahasiswa;
         $mahasiswa->nim = $request->get('nim');
         $mahasiswa->nama = $request->get('nama');
+        $mahasiswa->image = $request->get('image');
         $mahasiswa->jurusan = $request->get('jurusan');
 
         $kelas = new Kelas;
         $kelas->id = $request->get('kelas');
 
         $mahasiswa->kelas()->associate($kelas);
+
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images', 'public');
+            $mahasiswa->image = $image_name;
+        }
+
         $mahasiswa->save();
 
         return redirect()->route('mahasiswas.index')->with('success', 'Mahasiswa Berhasil Ditambahkan');
@@ -109,6 +126,15 @@ class MahasiswaController extends Controller
         $kelas->id = $request->get('kelas');
 
         $mahasiswa->kelas()->associate($kelas);
+
+        if ($request->hasFile('image')) {
+            if ($mahasiswa->image && file_exists(storage_path('app/public/' . $mahasiswa->image))) {
+                \Storage::delete('public/' . $mahasiswa->image);
+            }
+            $image_name = $request->file('image')->store('images', 'public');
+            $mahasiswa->image = $image_name;
+        }
+
         $mahasiswa->save();
 
         return redirect()->route('mahasiswas.index')->with('success', 'Mahasiswa Berhasil Diupdate');
@@ -120,7 +146,9 @@ class MahasiswaController extends Controller
     public function destroy($nim)
     {
         $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+
         if ($mahasiswa != null) {
+            $mahasiswa->matakuliah()->detach();
             $mahasiswa->delete();
             return redirect()->route('mahasiswas.index')->with('success', 'Mahasiswa Berhasil Dihapus');
         }
